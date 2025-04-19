@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جرين لايت | أول مكتبة أدوات ذكاء اصطناعي في مصر</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(90deg, #0ea5e9 0%, #10b981 100%);
+        }
+
+        .category-header {
+            background: linear-gradient(90deg, #0ea5e9 0%, #10b981 100%);
+        }
+
+        .card {
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag-free {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .tag-paid {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+
+        .filter-button.active {
+            background-color: #0ea5e9;
+            color: white;
+        }
+
+        /* Fix for Tailwind padding issues with RTL */
+        [dir="rtl"] .ml-2 {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .mr-2 {
+            margin-left: 0.5rem;
+            margin-right: 0;
+        }
+
+        /* Category specific colors */
+        .cat-writing {
+            background-color: #8b5cf6;
+        }
+
+        .cat-image {
+            background-color: #ec4899;
+        }
+
+        .cat-video {
+            background-color: #f59e0b;
+        }
+
+        .cat-audio {
+            background-color: #10b981;
+        }
+
+        .cat-code {
+            background-color: #3b82f6;
+        }
+
+        .cat-seo {
+            background-color: #6366f1;
+        }
+
+        .cat-chat {
+            background-color: #0ea5e9;
+        }
+
+        .cat-productivity {
+            background-color: #ef4444;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <!-- Header Section -->
+    <header class="hero-gradient text-white py-12 px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2">جرين لايت</h1>
+        <p class="text-xl md:text-2xl mb-8">أول مكتبة أدوات ذكاء اصطناعي في مصر</p>
+        <div class="max-w-3xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <div class="relative w-full max-w-2xl">
+                    <input type="text" id="search" placeholder="ابحث عن أداة..."
+                        class="w-full py-3 px-4 rounded-lg border-0 focus:outline-none search-input pr-10 text-gray-800">
+                    <span class="absolute left-3 top-3 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+                <div>
+                    <button id="addToolBtn"
+                        class="bg-black text-white hover:bg-gray-900 hover:text-white py-3 px-6 rounded-lg font-medium transition duration-300 shadow-md">
+                        <i class="fas fa-plus ml-2"></i>إضافة أداة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Section -->
+    <div class="bg-white py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-between items-center">
+                <div class="flex flex-wrap gap-2 my-2">
+                    <button class="filter-button active py-2 px-4 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
+                        data-filter="all">الكل</button>
+                    <button class="filter-button py-2 px-4 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
+                        data-filter="free">مجاني</button>
+                    <button class="filter-button py-2 px-4 rounded-full text-sm font-medium bg-gray-100 hover:bg-gray-200"
+                        data-filter="paid">مدفوع</button>
+                </div>
+                <div class="flex flex-wrap gap-2 my-2">
+                    <span class="text-gray-500 ml-2">تصفية حسب:</span>
+                    <select id="categoryFilter" class="bg-gray-100 rounded-full py-2 px-4 text-sm font-medium">
+                        <option value="all">جميع الفئات</option>
+                        <option value="writing">الكتابة</option>
+                        <option value="image">الصور</option>
+                        <option value="video">الفيديو</option>
+                        <option value="audio">الصوت</option>
+                        <option value="code">البرمجة</option>
+                        <option value="seo">تحسين محركات البحث</option>
+                        <option value="chat">روبوتات المحادثة</option>
+                        <option value="productivity">الإنتاجية</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <!-- Tools Stats -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4">
+                    <h3 class="text-4xl font-bold text-teal-600">300+</h3>
+                    <p class="text-gray-600">أداة ذكاء اصطناعي</p>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-4xl font-bold text-purple-600">12</h3>
+                    <p class="text-gray-600">فئة مختلفة</p>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-4xl font-bold text-blue-600">150+</h3>
+                    <p class="text-gray-600">أداة مجانية</p>
+                </div>
+                <div class="p-4">
+                    <h3 class="text-4xl font-bold text-indigo-600">10+</h3>
+                    <p class="text-gray-600">تحديثات أسبوعية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Tools Section -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">🔥 أدوات مميزة</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- ChatGPT Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg"
+                            alt="ChatGPT" class="h-16 w-16 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">ChatGPT</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">روبوت محادثة ذكي يمكنه الإجابة على الأسئلة وإنشاء نصوص
+                            متنوعة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://chat.openai.com" target="_blank"
+                                class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Midjourney Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/midjourney.svg"
+                            alt="Midjourney" class="h-16 w-16 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Midjourney</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مولد صور احترافي بالذكاء الاصطناعي عبر وصف نصي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">صور</span>
+                            <a href="https://www.midjourney.com" target="_blank"
+                                class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Claude AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/anthropic.svg" alt="Claude AI"
+                            class="h-16 w-16 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Claude AI</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد ذكاء اصطناعي متقدم من Anthropic يمكنه فهم وإنشاء
+                            المحتوى.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://claude.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Runway Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="h-40 bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/runway.svg" alt="Runway"
+                            class="h-16 w-16 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Runway</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة لإنشاء وتحرير الفيديوهات باستخدام الذكاء الاصطناعي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">فيديو</span>
+                            <a href="https://runwayml.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Writing Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">✍️ الكتابة والمحتوى</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Jasper.ai Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Jasper AI</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة كتابة متقدمة تستخدم الذكاء الاصطناعي لإنشاء محتوى جذاب.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">كتابة</span>
+                            <a href="https://www.jasper.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quillbot Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">QuillBot</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">أداة تعيد صياغة النصوص بحيث تكون أصلية مع الحفاظ على المعنى الرئيسي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">كتابة</span>
+                            <a href="https://quillbot.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Copy.ai Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Copy.ai</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يساعد على كتابة محتوى تسويقي احترافي، من منشورات المدونات إلى الإعلانات.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">كتابة</span>
+                            <a href="https://www.copy.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- WriteSonic Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">WriteSonic</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يولد محتوى عالي الجودة للمواقع الإلكترونية والمدونات والإعلانات.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">كتابة</span>
+                            <a href="https://writesonic.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rytr Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Rytr</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد كتابة يساعدك على إنشاء محتوى عالي الجودة بتكلفة منخفضة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">كتابة</span>
+                            <a href="https://rytr.me" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Grammarly Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Grammarly</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد كتابة يستخدم الذكاء الاصطناعي لتحسين النصوص وتصحيح الأخطاء اللغوية.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">تدقيق لغوي</span>
+                            <a href="https://www.grammarly.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Generation Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">🎨 توليد الصور</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- DALL-E Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">DALL-E</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مولد صور من OpenAI يحول الوصف النصي إلى صور واقعية عالية
+                            الدقة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">صور</span>
+                            <a href="https://openai.com/dall-e" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stable Diffusion Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Stable Diffusion</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">نموذج مفتوح المصدر لتوليد الصور من النص باستخدام تقنية
+                            الانتشار.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">صور</span>
+                            <a href="https://stability.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leonardo AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Leonardo AI</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مولد صور يستخدم الذكاء الاصطناعي لإنشاء أعمال فنية من وصف
+                            نصي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">صور</span>
+                            <a href="https://leonardo.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bing Image Creator Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Bing Image Creator</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">أداة من Microsoft تستخدم DALL-E لإنشاء صور من وصف نصي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">صور</span>
+                            <a href="https://www.bing.com/create" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Generation Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">🎬 إنشاء وتحرير الفيديو</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- HeyGen Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">HeyGen</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يمكنك من إنشاء مقاطع فيديو بمتحدثين افتراضيين واقعيين.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">فيديو</span>
+                            <a href="https://www.heygen.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Synthesia Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Synthesia</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يحول النص إلى فيديوهات بمتحدثين افتراضيين واقعيين بأكثر من
+                            120 لغة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">فيديو</span>
+                            <a href="https://www.synthesia.io" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pictory AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Pictory AI</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يحول المحتوى النصي الطويل إلى مقاطع فيديو قصيرة جذابة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">فيديو</span>
+                            <a href="https://pictory.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pika Labs Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Pika Labs</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة لإنشاء فيديوهات قصيرة باستخدام الذكاء الاصطناعي من خلال
+                            وصف نصي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">فيديو</span>
+                            <a href="https://www.pika.art" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Bots Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">💬 روبوتات المحادثة</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Perplexity Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Perplexity</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">محرك بحث ذكي يجيب على استفساراتك مع توثيق المصادر.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://www.perplexity.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gemini Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Gemini</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">أحدث نموذج لغوي متقدم من Google يدعم النصوص والصور والفيديو.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://gemini.google.com" target="_blank"
+                                class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mistral AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Mistral AI</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">نماذج لغوية مفتوحة المصدر عالية الأداء، سهلة الاستخدام
+                            والتكامل.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://chat.mistral.ai" target="_blank"
+                                class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Poe Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Poe</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة تتيح الوصول لمجموعة متنوعة من نماذج الذكاء الاصطناعي في
+                            مكان واحد.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://poe.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coding & Development Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">💻 البرمجة والتطوير</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- GitHub Copilot Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">GitHub Copilot</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد برمجة يقترح التعليمات البرمجية والوظائف أثناء الكتابة.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://github.com/features/copilot" target="_blank"
+                                class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabnine Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Tabnine</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد برمجة ذكي يعمل على اقتراح أكواد كاملة أثناء الكتابة
+                            البرمجية.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://www.tabnine.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CodeWP Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">CodeWP</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مولد أكواد مخصص لووردبريس يستخدم الذكاء الاصطناعي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://codewp.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Replit Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Replit</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة برمجة تعاونية مع مساعد ذكاء اصطناعي مدمج (Ghostwriter).
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://replit.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Website Building Category -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">🌐 إنشاء المواقع الإلكترونية</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- 10Web Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">10Web</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">منصة لإنشاء مواقع ووردبريس باستخدام الذكاء الاصطناعي بثوان
+                            معدودة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">مواقع</span>
+                            <a href="https://10web.io" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wix ADI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Wix ADI</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يستخدم الذكاء الاصطناعي لإنشاء موقع ويب مخصص بناءً على
+                            احتياجات المستخدم.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">مواقع</span>
+                            <a href="https://wix.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Durable Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Durable</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">ينشئ مواقع ويب كاملة للشركات الصغيرة باستخدام الذكاء
+                            الاصطناعي في دقيقة واحدة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">مواقع</span>
+                            <a href="https://durable.co" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Framer AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Framer AI</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">يمكنك من إنشاء موقع ويب جميل بمجرد وصف ما تريده في جملة واحدة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">مواقع</span>
+                            <a href="https://framer.com/ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools from Bolt.new -->
+        <div class="category-section mb-12">
+            <div class="category-header rounded-lg p-4 text-white mb-6">
+                <h2 class="text-2xl font-bold">🚀 أدوات إضافية</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Qwen Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Qwen</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">تطوير منصة زنك جيك - نموذج لغوي كبير مفتوح المصدر من علي بابا.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DeepSeek Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">DeepSeek</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">استكشاف عميق للمعرفة - أداة بحث وذكاء اصطناعي متقدمة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">بحث</span>
+                            <a href="https://deepseek.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vondy Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Vondy</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مولد شعارات نصية احترافية باستخدام الذكاء الاصطناعي.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-pink-100 text-pink-800 text-xs px-2 py-1 rounded">شعارات</span>
+                            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- HeyBoss Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">HeyBoss</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">بناء تطبيقات ومواقع في دقائق معدودة باستخدام واجهة بسيطة.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">تطوير</span>
+                            <a href="#" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vercel v0 Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Vercel v0</h3>
+                            <span class="tag-paid text-xs px-2 py-1 rounded">مدفوع</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">دردشة خاصة باستخدام تقنيات Vercel لتطوير واجهات المستخدم.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">تطوير</span>
+                            <a href="https://v0.dev" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BlackBox.AI Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">BlackBox.AI</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">مساعد برمجة ذكي يقوم بكتابة واستكمال الأكواد تلقائيًا.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://www.blackbox.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Phind Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Phind</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">محرك بحث للمطورين مدعوم بالذكاء الاصطناعي، يقدم إجابات دقيقة للمشاكل البرمجية.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">برمجة</span>
+                            <a href="https://phind.com" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Grok Card -->
+                <div class="card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Grok</h3>
+                            <span class="tag-free text-xs px-2 py-1 rounded">مجاني</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">روبوت محادثة من شركة xAI (إيلون ماسك) يتميز بالسخرية والقدرة
+                            على الإجابة على أسئلة جريئة.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">محادثة</span>
+                            <a href="https://grok.x.ai" target="_blank" class="text-teal-600 hover:text-teal-800">
+                                <i class="fas fa-external-link-alt ml-1"></i>زيارة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add New Tool Section (Modal) -->
+        <div id="addToolModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl max-h-90vh overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">إضافة أداة جديدة</h3>
+                    <button id="closeModalBtn" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addToolForm">
+                    <div class="mb-4">
+                        <label for="toolName" class="block text-gray-700 font-medium mb-2">اسم الأداة *</label>
+                        <input type="text" id="toolName" name="toolName" class="w-full border border-gray-300 rounded-lg p-3"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="toolDescription" class="block text-gray-700 font-medium mb-2">وصف الأداة *</label>
+                        <textarea id="toolDescription" name="toolDescription" rows="3"
+                            class="w-full border border-gray-300 rounded-lg p-3" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="toolLink" class="block text-gray-700 font-medium mb-2">رابط الأداة *</label>
+                        <input type="url" id="toolLink" name="toolLink" class="w-full border border-gray-300 rounded-lg p-3"
+                            required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="toolCategory" class="block text-gray-700 font-medium mb-2">الفئة *</label>
+                        <select id="toolCategory" name="toolCategory"
+                            class="w-full border border-gray-300 rounded-lg p-3" required>
+                            <option value="">اختر فئة</option>
+                            <option value="writing">الكتابة</option>
+                            <option value="image">الصور</option>
+                            <option value="video">الفيديو</option>
+                            <option value="audio">الصوت</option>
+                            <option value="code">البرمجة</option>
+                            <option value="seo">تحسين محركات البحث</option>
+                            <option value="chat">روبوتات المحادثة</option>
+                            <option value="productivity">الإنتاجية</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-medium mb-2">نوع الأداة *</label>
+                        <div class="flex space-x-4">
+                            <div class="flex items-center">
+                                <input type="radio" id="toolTypeFree" name="toolType" value="free" class="ml-2" checked>
+                                <label for="toolTypeFree">مجاني</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="toolTypePaid" name="toolType" value="paid" class="ml-2">
+                                <label for="toolTypePaid">مدفوع</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" id="toolTypeFreemium" name="toolType" value="freemium" class="ml-2">
+                                <label for="toolTypeFreemium">نموذج مختلط</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="toolImageUrl" class="block text-gray-700 font-medium mb-2">رابط صورة الأداة
+                            (اختياري)</label>
+                        <input type="url" id="toolImageUrl" name="toolImageUrl" class="w-full border border-gray-300 rounded-lg p-3">
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="cancelBtn"
+                            class="bg-gray-200 text-gray-800 py-2 px-6 rounded-lg ml-3 hover:bg-gray-300">إلغاء</button>
+                        <button type="submit"
+                            class="bg-teal-600 text-white py-2 px-6 rounded-lg hover:bg-teal-700">إرسال</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">مكتبة جرين لايت</h3>
+                    <p class="text-gray-300">أول مكتبة أدوات ذكاء اصطناعي في مصر، تهدف لمساعدة الجميع في الوصول لأفضل
+                        أدوات الذكاء الاصطناعي.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">الرئيسية</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">تصفح الأدوات</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">أضف أداة</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">فئات الأدوات</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white">الكتابة والمحتوى</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">توليد الصور</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">إنشاء وتحرير الفيديو</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white">البرمجة والتطوير</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">تواصل معنا</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope ml-2"></i>
+                            <a href="mailto:info@greenlight.ai"
+                                class="text-gray-300 hover:text-white">info@greenlight.ai</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone ml-2"></i>
+                            <span class="text-gray-300">+20 123 456 7890</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+                <p class="text-gray-300">© 2024 مكتبة جرين لايت لأدوات الذكاء الاصطناعي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add Tool Modal
+        const addToolBtn = document.getElementById('addToolBtn');
+        const addToolModal = document.getElementById('addToolModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const addToolForm = document.getElementById('addToolForm');
+
+        addToolBtn.addEventListener('click', () => {
+            addToolModal.classList.remove('hidden');
+        });
+
+        function closeModal() {
+            addToolModal.classList.add('hidden');
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === addToolModal) {
+                closeModal();
+            }
+        });
+
+        // Handle form submission
+        addToolForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // In a real application, you would send this data to a server
+            const formData = {
+                name: document.getElementById('toolName').value,
+                description: document.getElementById('toolDescription').value,
+                link: document.getElementById('toolLink').value,
+                category: document.getElementById('toolCategory').value,
+                type: document.querySelector('input[name="toolType"]:checked').value,
+                imageUrl: document.getElementById('toolImageUrl').value
+            };
+            
+            // Simple validation
+            if (!formData.name || !formData.description || !formData.link || !formData.category) {
+                alert('يرجى ملء جميع الحقول المطلوبة');
+                return;
+            }
+            
+            // For demonstration, just show an alert
+            alert('تم إرسال طلب إضافة الأداة بنجاح! سيتم مراجعته قريبًا.');
+            
+            // Reset form and close modal
+            addToolForm.reset();
+            closeModal();
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('search');
+        const cards = document.querySelectorAll('.card');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            cards.forEach(card => {
+                const toolName = card.querySelector('h3').textContent.toLowerCase();
+                const toolDescription = card.querySelector('p').textContent.toLowerCase();
+                
+                if (toolName.includes(searchTerm) || toolDescription.includes(searchTerm)) {
+                    card.parentElement.style.display = 'block';
+                } else {
+                    card.parentElement.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const categoryFilter = document.getElementById('categoryFilter');
+
+        function applyFilters() {
+            const activePriceFilterButton = document.querySelector('.filter-button.active');
+            const priceFilter = activePriceFilterButton ? activePriceFilterButton.getAttribute('data-filter') : 'all';
+            const selectedCategory = categoryFilter.value;
+
+            // First, handle category visibility
+            document.querySelectorAll('.category-section').forEach(section => {
+                const categoryHeader = section.querySelector('h2');
+                if (selectedCategory === 'all' || !categoryHeader || categoryHeader.textContent.toLowerCase().includes(selectedCategory)) {
+                    section.style.display = 'block';
+                    // Then filter cards within visible categories
+                    section.querySelectorAll('.card').forEach(card => {
+                        const isFree = card.querySelector('.tag-free');
+                        const isPaid = card.querySelector('.tag-paid');
+                        let showCard = true;
+
+                        if (priceFilter === 'free' && !isFree) {
+                            showCard = false;
+                        } else if (priceFilter === 'paid' && !isPaid) {
+                             showCard = false;
+                        } // 'all' price filter shows everything
+
+                        if (showCard) {
+                            card.parentElement.style.display = 'block';
+                        } else {
+                            card.parentElement.style.display = 'none';
+                        }
+                    });
+                } else {
+                     section.style.display = 'none';
+                }
+            });
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                applyFilters();
+            });
+        });
+
+        categoryFilter.addEventListener('change', applyFilters);
+
+        // Initial filter application on load
+        applyFilters();
+
+        // Add data-category-id attributes to category headers for easier selection
+        document.querySelectorAll('.category-section h2').forEach(h2 => {
+            let categoryId = '';
+            if (h2.textContent.includes('الكتابة')) categoryId = 'writing';
+            else if (h2.textContent.includes('الصور')) categoryId = 'image';
+            else if (h2.textContent.includes('الفيديو')) categoryId = 'video';
+            else if (h2.textContent.includes('الصوت')) categoryId = 'audio';
+            else if (h2.textContent.includes('المواقع')) categoryId = 'website';
+            else if (h2.textContent.includes('المحادثة')) categoryId = 'chat';
+            else if (h2.textContent.includes('إضافية')) categoryId = 'other';
+
+            if (categoryId) h2.setAttribute('data-category-id', categoryId);
+        });
+    </script>
+</body>
+
+</html>
